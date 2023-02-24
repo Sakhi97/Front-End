@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React from 'react';
+import Todolist from './components/Todolist';
+import Todotable from './components/Todotable';
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = React.useState([]);
+
+  const handleAddTodo = (todo) => {
+    setTodos([todo, ...todos]);
+  };
+
+  const handleDeleteTodo = (row) => {
+    setTodos(todos.filter((todo, index) => index !== row));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Todolist onAddTodo={handleAddTodo} />
+      <Todotable todos={todos} onDeleteTodo={handleDeleteTodo} />
     </div>
   );
 }

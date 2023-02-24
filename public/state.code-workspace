@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../../state"
+		},
+		{
+			"path": "../../../networking"
+		},
+		{
+			"path": "../../../handling lists"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
