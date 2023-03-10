@@ -1,6 +1,6 @@
 import React from 'react';
 import Todolist from './components/Todolist';
-import Todotable from './components/Todotable';
+
 import './App.css';
 
 function App() {
@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className="App">
-      <Todolist onAddTodo={handleAddTodo} />
-      <Todotable todos={todos} onDeleteTodo={handleDeleteTodo} />
+      <Todolist  />
+     
     </div>
   );
 }
