@@ -57,7 +57,7 @@ export default function Todolist() {
     
     return(
         <div>
-        <h1>My todos</h1>
+       
 
       <Stack 
         direction="row"
