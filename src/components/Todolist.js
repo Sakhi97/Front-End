@@ -1,5 +1,13 @@
 import React from 'react';
 
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { AgGridReact } from 'ag-grid-react';
 
@@ -7,7 +15,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
 export default function Todolist() {
-    const [todo, setTodo] = React.useState({ description: '', priority: '', date: ''});
+    const [todo, setTodo] = React.useState({ description: '', priority: '', date: null});
     const [todos, setTodos] = React.useState([]); // Two different exports. File can contain only one default export. To import something which is not exported with default we can use import React, ({useState})
     const gridRef = React.useRef();
     
@@ -19,11 +27,22 @@ export default function Todolist() {
       
     ])
 
-    const handleAddTodo = () => {
-        setTodos([todo, ...todos ]);
-        setTodo({ description: '', priority: '', date: ''});
-    }
 
+    function handleAddTodo() {
+      if (todo.date !== null) {
+        setTodos([{
+          ...todo,
+          date: new Date(todo.date).toLocaleDateString('fi-FI')
+        }, ...todos]);
+        setTodo({
+          description: '',
+          priority: '',
+          date: null
+        });
+      } else {
+        alert('Please select a date for your todo.');
+      }
+    }
    
 
     const handleDeleteTodo = () => {
@@ -39,26 +58,47 @@ export default function Todolist() {
     return(
         <div>
         <h1>My todos</h1>
-        <input 
-          placeholder='Description'
+
+      <Stack 
+        direction="row"
+        spacing={2} 
+        justifyContent="center"
+        alignItems="center" >
+
+
+        <TextField
+          label='Description'
+          variant="standard"
           value={todo.description}
           onChange={e => setTodo({...todo, description: e.target.value})} 
         />
 
-        <input 
-          placeholder='Priority'
+        <TextField
+          label='Priority'
+          variant="standard"
           value={todo.priority}
           onChange={e => setTodo({...todo, priority: e.target.value})} 
         />
-
-        <input 
-          type='date'
-          placeholder='Date'
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        
+        <DatePicker
+          label="Date"
           value={todo.date}
-          onChange={e => setTodo({...todo, date: e.target.value})} 
-        />
-        <button onClick={handleAddTodo}>Add Todo</button>
-        <button onClick={handleDeleteTodo}>Delete</button>
+          onChange={(newValue) => setTodo({ ...todo, date: newValue}) }
+          />
+          </LocalizationProvider>
+        <Button 
+        onClick={handleAddTodo} 
+        variant="contained">Add Todo
+        </Button>
+
+        <Button 
+        onClick={handleDeleteTodo} 
+        variant="contained" 
+        color="error">Delete
+        </Button>
+
+      </Stack>
        
         <div className='ag-theme-material' style={{ height: 600, width: 600, margin: 'auto'}}>
           <AgGridReact

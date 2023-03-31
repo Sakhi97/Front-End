@@ -1,6 +1,8 @@
 import React from 'react';
 import Todolist from './components/Todolist';
-
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import './App.css';
 
 function App() {
@@ -16,6 +18,13 @@ function App() {
 
   return (
     <div className="App">
+      <AppBar position='static'>
+        <Toolbar>
+          <Typography>
+            My todos
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Todolist  />
      
     </div>
